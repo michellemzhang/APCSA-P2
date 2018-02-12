@@ -45,5 +45,7 @@ public class Quadratic
 
 		System.out.println("rootone :: " + String.format("%.2f\n", rootOne));
 		System.out.println("roottwo :: " + String.format("%.2f\n", rootTwo)); 
+		
 	}
+	
 }

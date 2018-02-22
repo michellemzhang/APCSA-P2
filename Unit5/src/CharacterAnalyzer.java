@@ -13,12 +13,12 @@ public class CharacterAnalyzer
 
 	public CharacterAnalyzer()
 	{
-		setChar('x');
+		theChar = ' ';
 	}
 
 	public CharacterAnalyzer(char c)
 	{
-		setChar(c);
+		theChar = c;
 	}
 
 	public void setChar(char c)

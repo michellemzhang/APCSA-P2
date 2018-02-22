@@ -9,7 +9,7 @@ import static java.lang.System.*;
 public class LoopStats
 {
 	private int start, stop;
-	private int total, evenCount, oddCount;
+	private int total;
 
 	public LoopStats()
 	{
@@ -31,12 +31,12 @@ public class LoopStats
 
 	public int getEvenCount()
 	{
-		evenCount=0;
+		int evenCount=0;
+		int run;
 		
-		
-		for (int i = start; i <= stop; i = i + 1)
+		for (run = start; run <= stop; run = run + 1)
 		{
-			if (i % 2 == 0)
+			if (run % 2 == 0)
 			{
 				evenCount = evenCount + 1;
 			}
@@ -46,11 +46,12 @@ public class LoopStats
 
 	public int getOddCount()
 	{
-		oddCount=0; 
+		int oddCount=0;
+		int run; 
 		
-		for (int i  = start; i <= stop; i = i + 1)
+		for (run = start; run <= stop; run = run + 1)
 		{
-			if (i % 2 != 0)
+			if (run % 2 != 0)
 			{
 				oddCount = oddCount + 1;
 			}
@@ -60,18 +61,18 @@ public class LoopStats
 
 	public int getTotal()
 	{
-		total=0;
+		int total=0;
+		int run; 
 		
-		
-		for (int i = start; i <= stop; i = i + 1)
+		for (run = start; run <= stop; run = run + 1)
 		{
-			total = total + i;
+			total = total + run;
 		}
 		return total;
 	}
 	
 	public String toString()
 	{
-		return start + " " + stop + "\n" + "odd count: " + getOddCount() + "\n" + "even Count: " + getEvenCount() + "\n" + "total: " + getTotal();
+		return start + " " + stop;
 	}
 }

@@ -13,22 +13,22 @@ public class Lab09f
 		LetterRemover myLetterRemover = new LetterRemover("I am Sam I am");
 		myLetterRemover.setRemover("I am Sam I am", 'a');
 		System.out.println(myLetterRemover.toString());	
-		
+		System.out.println(myLetterRemover.removeLetters());
 		
 		myLetterRemover.setRemover("hihihihihi", 'i');
 		System.out.println(myLetterRemover.toString());	
-		
+		System.out.println(myLetterRemover.removeLetters());
 		
 		myLetterRemover.setRemover("abababababa", 'b');
 		System.out.println(myLetterRemover.toString());	
-		
+		System.out.println(myLetterRemover.removeLetters());
 		
 		myLetterRemover.setRemover("xcxcxcx", 'c');
 		System.out.println(myLetterRemover.toString());	
-		
+		System.out.println(myLetterRemover.removeLetters());
 		
 		myLetterRemover.setRemover("hellothere", 'e');
 		System.out.println(myLetterRemover.toString());	
-		
+		System.out.println(myLetterRemover.removeLetters());
 	}
 }

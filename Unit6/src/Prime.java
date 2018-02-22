@@ -28,11 +28,10 @@ public class Prime
 
 	public boolean isPrime()
 	{
-		int run;
 		
-		for (run = 2; run < number; run = run + 1)
+		for (int i = 2; i < Math.sqrt(number); i = i + 1)
 		{
-			if (number % run == 0)
+			if (number % i == 0)
 			{
 				return false;
 			}

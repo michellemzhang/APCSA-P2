@@ -1,0 +1,42 @@
+//© A+ Computer Science  -  www.apluscompsci.com
+//Name -
+//Date -
+//Class -
+//Lab  -
+
+import static java.lang.System.*;
+
+public class Lab09f
+{
+	public static void main( String args[] )
+	{
+		LetterRemover myLetterRemover = new LetterRemover("I am Sam I am");
+		myLetterRemover.setRemover("I am Sam I am", 'a');
+		System.out.println(myLetterRemover.toString());	
+		System.out.println(myLetterRemover.removeLetters());
+		
+		myLetterRemover.setRemover("hihihihihi", 'i');
+		System.out.println(myLetterRemover.toString());	
+		System.out.println(myLetterRemover.removeLetters());
+		
+		myLetterRemover.setRemover("abababababa", 'b');
+		System.out.println(myLetterRemover.toString());	
+		System.out.println(myLetterRemover.removeLetters());
+		
+		myLetterRemover.setRemover("xcxcxcx", 'c');
+		System.out.println(myLetterRemover.toString());	
+		System.out.println(myLetterRemover.removeLetters());
+		
+		myLetterRemover.setRemover("hellothere", 'e');
+		System.out.println(myLetterRemover.toString());	
+		System.out.println(myLetterRemover.removeLetters());
+		
+		int k=3;
+		String s = "";
+		while( k > -1 ){
+		  s = k + " " + s;
+		  k = k--;   //same as k--;
+		}
+		System.out.print(s);
+	}
+}

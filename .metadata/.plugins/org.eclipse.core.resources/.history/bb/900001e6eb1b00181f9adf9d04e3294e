@@ -1,0 +1,31 @@
+/**
+ * This is a class that tests the Card class.
+ */
+public class CardTester {
+
+	/**
+	 * The main method in this class checks the Card operations for consistency.
+	 *	@param args is not used.
+	 */
+	public static void main(String[] args) {
+		Card test1 = new Card("jack", "clubs", 11);
+		Card test2 = new Card("queen", "hearts", 12);
+		Card test3 = new Card("king", "spades", 13);
+				
+		System.out.print(test1.suit());
+		System.out.print(test1.rank());
+		System.out.print(test1.pointValue());
+		System.out.print(test1.toString());
+		
+		System.out.print(test2.suit());
+		System.out.print(test2.rank());
+		System.out.print(test2.pointValue());
+		System.out.print(test2.toString());
+		
+		System.out.print(test3.suit());
+		System.out.print(test3.rank());
+		System.out.print(test3.pointValue());
+		System.out.print(test3.toString());
+		/* *** TO BE IMPLEMENTED IN ACTIVITY 1 *** */
+	}
+}

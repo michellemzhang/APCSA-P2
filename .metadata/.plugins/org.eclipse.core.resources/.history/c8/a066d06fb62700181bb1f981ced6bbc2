@@ -1,0 +1,55 @@
+//© A+ Computer Science  -  www.apluscompsci.com
+//Name -
+//Date -
+//Class -
+//Lab  -
+
+import java.util.Arrays;
+import java.util.Scanner;
+import static java.lang.System.*;
+import static java.util.Arrays.*;
+
+public class GradeBookRunner
+{
+   public static void main( String args[] )
+   {
+		out.println("Welcome to the Class Stats program!");
+		
+		Scanner keyboard = new Scanner(System.in);
+		
+	
+		
+   }
+
+		
+		
+		
+		
+		
+		
+		//thursday quiz: array lists; all main methods for an array list; add, set, remove; what is array list at the very end
+		// collections class; reverse; key methods in collections class
+		// in the slides
+		// reference stuff (unit 11)
+		// what is printed out when a method is called 
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}		

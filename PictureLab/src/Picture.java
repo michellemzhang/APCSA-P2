@@ -84,6 +84,64 @@ public class Picture extends SimplePicture
     return output;    
   }
   
+  public void encode (Picture messagePict)
+  {
+	 Pixel[][] messagePixels = messagePict.getPixels2D();
+	 Pixel[][] currPixels = this.getPixels2D();
+	 Pixel currPixel = null;
+	 Pixel messagePixel = null;
+	 int count = 0;
+	 for (int row = 0; row < this.getHeight(); row++)
+	 {
+		 for (int col = 0; col < this.getWidth(); col++)
+		 {
+			 currPixel = currPixels[row][col];
+			 int number = currPixel.getRed() * currPixel.getGreen();
+			 if ((number % 10) % 2 != 0)
+			 {
+				 currPixel.setRed(currPixel.getRed() - 1);
+				 currPixel.setGreen(currPixel.getGreen() - 1);
+			 }
+			 messagePixel = messagePixels[row][col];
+			 if (messagePixel.colorDistance(Color.BLACK) < 50)
+			 {
+				 currPixel.setRed(currPixel.getRed() + 1);
+				 currPixel.setGreen(currPixel.getGreen() + 1);
+				 count++;
+			 }
+		 }
+	 }
+	 System.out.println(count);
+  }
+  
+  	public Picture decode()
+  	{
+  		Pixel[][] pixels = this.getPixels2D();
+  		int height = this.getHeight();
+  		int width = this.getWidth();
+  		Pixel currPixel = null;
+  		Pixel messagePixel = null;
+		Picture messagePicture = new Picture(height, width);
+  		Pixel[][] messagePixels = messagePicture.getPixels2D();
+  		int count = 0; 
+  		for (int row = 0; row < this.getHeight(); row++)
+  		{
+  			for (int col = 0; col < this.getWidth(); col++)
+  			{
+  				currPixel = pixels[row][col];
+  				int num = currPixel.getRed() * currPixel.getGreen();
+  				messagePixel = messagePixels[row][col];
+  				if (((currPixel.getRed() * currPixel.getGreen()) % 10) % 2 != 0 && (currPixel.getRed() % 2 != 0) && (currPixel.getGreen() % 2 != 0))
+  				{
+  					messagePixel.setColor(Color.BLACK);
+  					count++;
+  				}
+  			}
+  		}
+  		
+  		System.out.println(count);
+  		return messagePicture;
+  	}
   /** Method to set the blue to 0 */
   public void zeroBlue()
   {
@@ -135,6 +193,34 @@ public class Picture extends SimplePicture
 		  }
 	  }
   }
+  
+  public void chromakey(Picture newBack) 
+  {
+	  System.out.println("Michelle Zhang");
+	  System.out.println("Period 2");
+	  System.out.println("5/08/2018");
+	  System.out.println("Computer #4");
+		
+	  Pixel oldPixel = null;
+	  Pixel newPixel = null;
+	  
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel[][] fromPixels = newBack.getPixels2D();
+	  for (int r = 0; r < pixels.length; r++)
+	  {
+		  for (int c = 0; c < pixels[r].length; c++ )
+			 {
+			  	if (pixels[r][c].getBlue() > pixels[r][c].getRed())
+					{
+			  		oldPixel = pixels[r][c];
+					newPixel = fromPixels[r][c];
+					oldPixel.setColor(newPixel.getColor());
+				  	
+					}
+			 }
+	  }
+  }
+	  
   
   public void negate()
   {
@@ -483,6 +569,9 @@ public class Picture extends SimplePicture
     	}
     }
   } 
+  
+  
+  
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
@@ -493,5 +582,7 @@ public class Picture extends SimplePicture
     beach.zeroBlue();
     beach.explore();
   }
+
+
   
 } // this } is the end of class Picture, put all new methods before this

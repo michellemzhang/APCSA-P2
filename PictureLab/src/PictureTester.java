@@ -168,11 +168,43 @@ public class PictureTester
     swan.explore();
   }
   
+  public static void testChromakey()
+  {
+	Picture mark = new Picture("blue-mark.jpg");
+  	Picture moon = new Picture("moon-surface.jpg");
+  	mark.chromakey(moon); 
+ 	mark.explore();
+  }
+  
+  public static void testEncodeandDecode1()
+  {
+	  Picture beach = new Picture("beach.jpg");
+	  Picture message = new Picture("msg.jpg");
+	  beach.explore();
+	  beach.encode(message);
+	  beach.explore();
+	  beach.decode().explore();
+  }
+  
+  public static void testEncodeandDecode2()
+  {
+	  Picture beach = new Picture("beach.jpg");
+	  Picture apple1 = new Picture("apple1.jpg");
+	  beach.explore();
+	  beach.encode(apple1);
+	  beach.explore();
+	  beach.decode().explore();			  
+  }
+
   /** Main method for testing.  Every class can have a main
     * method in Java */
   
   public static void main(String[] args)
   {
+	  
+	 //testChromakey();
+	  testEncodeandDecode1();
+	 //testEncodeandDecode2();
     // uncomment a call here to run a test
     // and comment out the ones you don't want
     // to run
@@ -203,5 +235,6 @@ public class PictureTester
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
     //testGetAverageForColumn(0);
+	  
   }
 }

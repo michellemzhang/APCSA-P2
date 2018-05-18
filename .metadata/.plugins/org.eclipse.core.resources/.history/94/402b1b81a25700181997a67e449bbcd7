@@ -1,0 +1,105 @@
+import java.awt.Color;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import javax.imageio.ImageIO;
+
+public class Tiles extends Block
+{
+	private Ball ball;
+	private List<Tile> tiles;
+	private Image image;
+	
+	public Tiles()
+	{
+		tiles = new ArrayList<Tile>();			
+	}
+	
+	public List<Tile> addTiles()
+	{
+		//top tiles first layer
+				int topx = 0; 				
+				for (topx = 0; topx < 700; topx = topx + 90)
+				{
+					tiles.add(new Tile(topx, 0, 90, 50, Color.green));
+					topx += 10;
+				}
+				
+				//top tiles second layer
+				for (topx = 0; topx < 700; topx = topx + 90)
+				{
+					tiles.add(new Tile(topx, 50, 90, 50,  Color.yellow));	
+					topx += 10;
+				}
+				
+				//bottom tiles first layer
+				int bottomx = 0; 
+				for (bottomx = 0; bottomx < 700; bottomx = bottomx + 90)
+				{
+					tiles.add(new Tile(bottomx, 500, 90, 50, Color.green));	
+					bottomx += 10;
+				}
+			
+				//bottom tiles second layer
+				
+				for (bottomx = 0; bottomx < 700; bottomx = bottomx + 90)
+				{
+					tiles.add(new Tile(bottomx, 450, 90, 50, Color.yellow));	
+					bottomx += 10;
+				}
+				
+				//left tiles first layer
+				int lefty = 0; 
+				for (lefty = 60; lefty < 560; lefty = lefty + 90)
+				{			
+					tiles.add(new Tile(0, lefty, 50, 90, Color.green));		
+					lefty += 10;
+				}
+				
+				//left tiles second layer 
+				for (lefty = 60; lefty < 560; lefty = lefty + 90)
+				{
+					tiles.add(new Tile(50, lefty, 50, 90, Color.yellow));		
+					lefty += 10;
+				}
+			
+				//right tiles first layer
+				int righty = 0;	
+				for (righty = 60; righty < 450; righty = righty + 90)
+				{
+					tiles.add(new Tile(740, righty, 50, 90, Color.green));	
+					righty += 10;
+				}
+				
+				//right tiles second layer		
+				for (righty = 60; righty < 450; righty = righty + 90)
+				{
+					tiles.add(new Tile(690, righty, 50, 90, Color.yellow));	
+					righty += 10;
+				}
+				
+				return tiles;
+	}
+
+	
+	
+	public void removeDeadOnes()
+	{
+			for (int j=0; j<tiles.size(); j++)
+			{
+				if (ball.getX() >= tiles.get(j).getX()
+						&& ball.getX() <= tiles.get(j).getX() + 45 
+						&& ball.getY() <= tiles.get(j).getY() + 70)
+				{
+					tiles.remove(j);
+					if (tiles.size()==0) break;
+				}
+			}
+	}
+}

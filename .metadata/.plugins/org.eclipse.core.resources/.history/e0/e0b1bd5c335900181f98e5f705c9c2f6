@@ -1,0 +1,260 @@
+//© A+ Computer Science  -  www.apluscompsci.com
+//Name -
+//Date -
+//Class -
+//Lab  -
+
+import java.awt.Color;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Canvas;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+import static java.lang.Character.*;
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.awt.event.ActionListener;
+
+public class Pong extends Canvas implements KeyListener, Runnable
+{
+	private static final Color Color = null;
+	private Ball ball;
+	private Paddle paddle;
+	private boolean[] keys;
+	private BufferedImage back;
+	private int lscore;
+	private int rscore;
+	private Tiles tiles;
+	private Tiles tiles1;
+	private int score;
+
+	public Pong()
+	{
+		//set up all variables related to the game
+		ball = new Ball(200,300,10,10,Color.BLUE,2,1);
+		paddle = new Paddle(400, 200, 40, 40, Color.orange, 5);
+		tiles = new Tiles();
+		tiles1 = new Tiles();
+		keys = new boolean[4];;
+		lscore = 0;
+		rscore = 0;
+		score = 0;
+    
+    	setBackground(Color.WHITE);
+		setVisible(true);
+		
+		new Thread(this).start();
+		addKeyListener(this);		//starts the key thread to log key strokes
+	}
+	
+   public void update(Graphics window){
+	   paint(window);
+   }
+
+   public void paint(Graphics window)
+   {
+		//set up the double buffering to make the game animation nice and smooth
+		Graphics2D twoDGraph = (Graphics2D)window;
+
+		//take a snap shop of the current screen and same it as an image
+		//that is the exact same width and height as the current screen
+		if(back==null)
+		   back = (BufferedImage)(createImage(getWidth(),getHeight()));
+
+		//create a graphics reference to the back ground image
+		//we will draw all changes on the background image
+		Graphics graphToBack = back.createGraphics();
+
+		graphToBack.setColor(Color.BLACK);
+		
+		ball.moveAndDraw(graphToBack);
+		paddle.draw(graphToBack, Color.orange);
+		tiles.drawEmAll(graphToBack);
+		
+		graphToBack.setColor(Color.RED);
+		graphToBack.drawString("Score: " + score, 700, 50);
+		
+		for (Tile x : tiles.getTiles())
+		{
+			x.draw(graphToBack);
+			
+			//see if ball hits the block
+			if (ball.didCollideTop(x)){
+				ball.setXSpeed(-ball.getXSpeed());
+				ball.setYSpeed(-ball.getYSpeed());
+				graphToBack.setColor(Color.WHITE);
+				graphToBack.fillRect(700, 50, 20, 20);
+				score+=10;
+				graphToBack.setColor(Color.WHITE);
+				graphToBack.fillRect(x.getX(), x.getY(), x.getWidth(), x.getHeight());
+				tiles.remove(x);				
+			}
+			
+			if (ball.didCollideBottom(x)){
+				ball.setXSpeed(-ball.getXSpeed());
+				ball.setYSpeed(-ball.getYSpeed());
+				graphToBack.setColor(Color.WHITE);
+				graphToBack.fillRect(700, 50, 20, 20);
+				score+=10;
+				graphToBack.setColor(Color.WHITE);
+				graphToBack.fillRect(x.getX(), x.getY(), x.getWidth(), x.getHeight());
+				tiles.remove(x);			
+			}
+			
+			if (ball.didCollideRight(x)){
+				ball.setXSpeed(-ball.getXSpeed());
+				ball.setYSpeed(-ball.getYSpeed());
+				graphToBack.setColor(Color.WHITE);
+				graphToBack.fillRect(700, 50, 20, 20);
+				score+=10;
+				graphToBack.setColor(Color.WHITE);
+				graphToBack.fillRect(x.getX(), x.getY(), x.getWidth(), x.getHeight());
+				tiles.remove(x);
+			}
+			
+			if (ball.didCollideLeft(x)){
+				ball.setXSpeed(-ball.getXSpeed());
+				ball.setYSpeed(-ball.getYSpeed());
+				graphToBack.setColor(Color.WHITE);
+				graphToBack.fillRect(700, 50, 20, 20);
+				score+=10;
+				graphToBack.setColor(Color.WHITE);
+				graphToBack.fillRect(x.getX(), x.getY(), x.getWidth(), x.getHeight());
+				tiles.remove(x);				
+			}
+		}
+		
+		graphToBack.setColor(Color.BLACK);
+		
+		if (tiles.size() == 38)//this is so that a level change can be demonstrated quickly without having to finish the entire game
+		{
+			graphToBack.setColor(Color.BLACK);
+			graphToBack.drawString("2nd level", 700, 70);
+			graphToBack.setColor(Color.WHITE);
+			graphToBack.fillRect(ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight());
+			ball.setX(200);
+			ball.setY(300);
+			ball.moveAndDraw(graphToBack);
+			tiles = new Tiles();
+			tiles.drawEmAll(graphToBack);		
+			paddle.draw(graphToBack, Color.orange);
+			score = 0;
+		}	
+			
+		//check to see if ball hits the actual walls
+		
+		if (ball.getX() >= 760 || ball.getX() <= 0)
+		{
+			ball.setXSpeed(-ball.getXSpeed());
+			ball.setYSpeed(+ball.getYSpeed());
+		}
+		
+		if (ball.getY() >= 540 || ball.getY() <= 0)
+		{
+			ball.setXSpeed(+ball.getXSpeed());
+			ball.setYSpeed(-ball.getYSpeed());
+		}
+		
+		//check to see if ball hits the paddle
+		if (ball.getX() > paddle.getX() && ball.getX() < paddle.getX() + paddle.getWidth()){
+			if (ball.getY() > paddle.getY() && ball.getY() < paddle.getY() + paddle.getHeight()){
+				ball.setXSpeed(-ball.getXSpeed());
+				ball.setYSpeed(-ball.getYSpeed());
+			}
+		}
+	
+		//see if the paddles need to be moved
+		if (keys[2] == true) {
+			if (paddle.getY() > 10) {
+				paddle.moveUpAndDraw(graphToBack);
+			}
+		}
+		
+		if (keys[3] == true) {
+			if (paddle.getY() + paddle.getHeight() < 800) {
+				paddle.moveDownAndDraw(graphToBack);
+			}
+		}
+		
+		if (keys[1] == true) {
+			if (paddle.getX() > 10) {
+				paddle.moveRightandDraw(graphToBack);
+			}
+		}
+		
+		if (keys[0] == true) {
+			if (paddle.getX() + paddle.getWidth() < 800) {
+				paddle.moveLeftandDraw(graphToBack);
+			}
+		}
+		
+		twoDGraph.drawImage(back, null, 0, 0);
+	}
+
+   public void keyPressed(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			keys[0] = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			keys[1] = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP)
+		{
+			keys[2] = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
+		{
+			keys[3] = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			keys[4] = true;
+		}
+		repaint();
+	}
+
+	public void keyReleased(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			keys[0] = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			keys[1] = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP)
+		{
+			keys[2] = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
+		{
+			keys[3] = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			keys[4] = false;
+		}		
+	}
+
+	public void keyTyped(KeyEvent e){}
+	
+   public void run()
+   {
+   	try
+   	{
+   		while(true)
+   		{
+   		   Thread.currentThread().sleep(8);
+            repaint();
+         }
+      }catch(Exception e)
+      {
+      }
+  	}	
+}
